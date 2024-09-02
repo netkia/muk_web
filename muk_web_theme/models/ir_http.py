@@ -23,7 +23,7 @@ class IrHttp(models.AbstractModel):
     
     def session_info(self):
         result = super(IrHttp, self).session_info()
-        if request.env.user._is_internal():
+        if request.env and request.env.user and request.env.user._is_internal():
             for company in request.env.user.company_ids:
                 result['user_companies']['allowed_companies'][company.id].update({
                     'has_background_image': bool(company.background_image),
